@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vanilla JS - Time Since</title>
+        <script>
+            function timeSince(e,t){if(!t||!e)return"";if(isNaN(t.getTime())||isNaN(e.getTime()))return"Invalid date format";if(e>t)return"Where we're going, we don't need dates.";let n=Math.floor((t-e)/1e3);return`It has been ${Math.floor(n/86400)} days, ${Math.floor(n%86400/3600)} hours, ${Math.floor(n%3600/60)} minutes and ${n%60} seconds since ${e.toDateString()}.`}
+        </script>
+    </head>
+    <body>
+        <h1>Time Since App</h1>
+        <form id="date-form">
+            <input type="text" id="date-input" placeholder="MM/DD/YYYY" />
+            <button type="submit">Submit</button>
+        </form>
+        <div id="output">
+            <!-- Output will be displayed here -->
+        </div>
+        <script>
+            document.getElementById('date-form').addEventListener('submit', function(event) {
+                event.preventDefault();
+                const dateInput = document.getElementById('date-input').value;
+                const output = document.getElementById('output');
+
+                output.innerHTML = timeSince(new Date(dateInput), new Date());
+            });
+        </script>
+    </body>
+</html>

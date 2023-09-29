@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Vanilla React - Time Since</title>
+        <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+        <script>
+            function timeSince(e,t){if(!t||!e)return"";if(isNaN(t.getTime())||isNaN(e.getTime()))return"Invalid date format";if(e>t)return"Where we're going, we don't need dates.";let n=Math.floor((t-e)/1e3);return`It has been ${Math.floor(n/86400)} days, ${Math.floor(n%86400/3600)} hours, ${Math.floor(n%3600/60)} minutes and ${n%60} seconds since ${e.toDateString()}.`}
+        </script>
+    </head>
+    <body>
+
+        <div id="root"></div>
+
+        <script>
+            function TimeSince(props) {
+                return React.createElement('div', null, timeSince(props.then, props.now));
+            }
+        </script>
+
+        <script>
+            function App() {
+                const { useState } = React;
+                const [now, setNow] = useState(null)
+                const [then, setThen] = useState(null)
+                const [inputDate, setInputDate] = useState("");
+
+                function handleSubmit(event) {
+                    event.preventDefault();
+                    
+                    setNow(new Date());
+                    setThen(new Date(inputDate));
+                }
+
+                return React.createElement(
+                    'div',
+                    null,
+                    React.createElement('h1', null, 'Time Since App'),
+                    React.createElement(
+                        'form',
+                        { onSubmit: handleSubmit },
+                        React.createElement('input', { type: 'text', placeholder: 'MM/DD/YYYY', onChange: (e) => setInputDate(e.target.value), value: inputDate }),
+                        React.createElement('button', { type: 'submit' }, 'Submit')
+                    ),
+                    React.createElement(TimeSince, { now: now, then: then })
+                );
+            }
+
+            ReactDOM.render(
+                React.createElement(App),
+                document.getElementById('root')
+            );
+        </script>
+
+    </body>
+</html>
